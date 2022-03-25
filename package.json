@@ -2,7 +2,7 @@
   "name": "pipejs",
   "version": "1.0.0",
   "description": "Simple, no dependency package for functional programming pipes in Javascript/Node JS",
-  "main": "pipe-test.js",
+  "main": "pipe.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
