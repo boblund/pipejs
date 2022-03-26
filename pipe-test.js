@@ -2,15 +2,6 @@
 
 const {pipe, tap} = require('pipejs')
 
-const brumeParams = {
-  url: 'url',
-  token: 'token',
-  thisUser: 'thisUser',
-  baseDir: 'baseDir',
-  eventQueue: 'eventQueue',
-  networkEvents: 'networkEvents'
-};
-
 function createWebsocket({url, token, ...rest}) {
   // url and token removed from pass through params
   return {ws: 'ws', ...rest}  // ws added to pass through params
@@ -20,7 +11,7 @@ function makePeerConnection({...rest}) {
   return {peerConnection: 'peerConnection', ...rest}
 }
 
-function BrumeData(parms) {
+function brumeData(parms) {
   let {thisUser, baseDir, eventQueue, networkEvents} = parms // used but not removed
   return {brumeData:'brumeData', ...parms}
 }
@@ -37,5 +28,11 @@ function receiver({peerConnection, eventQueue, brumeData, networkEvents}) {
 // i.e. pipe(..., tap(receiver), ...) won't work
 
 const tee = tap(receiver)
-pipe(createWebsocket,makePeerConnection,BrumeData,
-  tee, sender)(brumeParams);
+pipe(createWebsocket,makePeerConnection,brumeData, tee, sender)({
+    url: 'url',
+    token: 'token',
+    thisUser: 'thisUser',
+    baseDir: 'baseDir',
+    eventQueue: 'eventQueue',
+    networkEvents: 'networkEvents'
+});
